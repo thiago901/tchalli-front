@@ -112,9 +112,14 @@ const Products: React.FC = () => {
         price: data.price,
         product_id: data.id,
       });
+      const newProducts = products.slice();
+      const productsIndex = newProducts.findIndex(p => p.id === data.id);
+      newProducts[productsIndex].stock.amount += Number(data.amount);
+      setProducts(newProducts);
+
       closeModal();
     },
-    [closeModal],
+    [closeModal, products],
   );
 
   const handleFormAddProduct = useCallback(

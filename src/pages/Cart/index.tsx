@@ -38,6 +38,15 @@ const Cart: React.FC = () => {
     }));
 
     await api.post('/salesdetail', { saleDetail: detail });
+
+    cart.map(async c => {
+      await api.post('/stock', {
+        amount: -c.amount,
+        product_id: c.id,
+        price: c.price,
+      });
+    });
+
     cleanCart();
   }, [cart, cartTotal.total, cleanCart]);
   const decrement = useCallback(
